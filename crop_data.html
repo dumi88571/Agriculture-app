@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Crop Data</h2>
+    <a href="{{ url_for('add_crop_data') }}" class="btn btn-success">Add Crop Data</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Farm</th>
+            <th>Crop Type</th>
+            <th>Planting Date</th>
+            <th>Expected Harvest</th>
+            <th>Actual Harvest</th>
+            <th>Expected Yield</th>
+            <th>Actual Yield</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in crop_data %}
+        <tr>
+            <td>{{ data[0] }}</td>
+            <td>{{ data[9] }}</td>
+            <td>{{ data[2] }}</td>
+            <td>{{ data[3] }}</td>
+            <td>{{ data[4] }}</td>
+            <td>{{ data[5] if data[5] else 'N/A' }}</td>
+            <td>{{ data[6] if data[6] else 'N/A' }}</td>
+            <td>{{ data[7] if data[7] else 'N/A' }}</td>
+            <td>
+                <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

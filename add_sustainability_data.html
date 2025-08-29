@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Sustainability Data</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="farm_id" class="form-label">Farm</label>
+        <select class="form-select" id="farm_id" name="farm_id" required>
+            <option value="">Select a farm</option>
+            {% for farm in farms %}
+            <option value="{{ farm[0] }}">{{ farm[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+    </div>
+    <div class="mb-3">
+        <label for="carbon_footprint" class="form-label">Carbon Footprint (tons CO2)</label>
+        <input type="number" class="form-control" id="carbon_footprint" name="carbon_footprint" step="0.01" required>
+    </div>
+    <div class="mb-3">
+        <label for="water_usage" class="form-label">Water Usage (liters)</label>
+        <input type="number" class="form-control" id="water_usage" name="water_usage" step="0.01" required>
+    </div>
+    <div class="mb-3">
+        <label for="energy_usage" class="form-label">Energy Usage (kWh)</label>
+        <input type="number" class="form-control" id="energy_usage" name="energy_usage" step="0.01" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Sustainability Data</button>
+    <a href="{{ url_for('sustainability') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

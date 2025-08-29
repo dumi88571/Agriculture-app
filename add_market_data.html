@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Market Data</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="crop_type" class="form-label">Crop Type</label>
+        <select class="form-select" id="crop_type" name="crop_type" required>
+            <option value="">Select a crop type</option>
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="corn">Corn</option>
+            <option value="soybean">Soybean</option>
+            <option value="cotton">Cotton</option>
+            <option value="potato">Potato</option>
+            <option value="tomato">Tomato</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price (per ton)</label>
+        <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+    </div>
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="location" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Market Data</button>
+    <a href="{{ url_for('market_data') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

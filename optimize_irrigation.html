@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Irrigation Optimization</h2>
+
+<p>Enter the following information to get detailed irrigation recommendations:</p>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="soil_moisture" class="form-label">Soil Moisture (%)</label>
+        <input type="number" class="form-control" id="soil_moisture" name="soil_moisture" min="0" max="100" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="crop_type" class="form-label">Crop Type</label>
+        <select class="form-select" id="crop_type" name="crop_type" required>
+            <option value="">Select a crop type</option>
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="corn">Corn</option>
+            <option value="soybean">Soybean</option>
+            <option value="cotton">Cotton</option>
+            <option value="potato">Potato</option>
+            <option value="tomato">Tomato</option>
+            <option value="beans">Beans</option>
+            <option value="peas">Peas</option>
+            <option value="cabbage">Cabbage</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="temperature" class="form-label">Temperature (°C)</label>
+        <input type="number" class="form-control" id="temperature" name="temperature" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="rainfall" class="form-label">Rainfall (mm)</label>
+        <input type="number" class="form-control" id="rainfall" name="rainfall" step="0.1" required>
+    </div>
+    <button type="submit" class="btn btn-success">Get Recommendations</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% if recommendation %}
+<div class="alert alert-info mt-4">
+    <h4>Irrigation Recommendation</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Water needed
+                    <span class="badge bg-primary rounded-pill">{{ recommendation.water_needed }} liters</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Best irrigation time
+                    <span class="badge bg-primary rounded-pill">{{ recommendation.irrigation_time }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Recommended method
+                    <span class="badge bg-primary rounded-pill">{{ recommendation.irrigation_method }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Time Reasoning:</strong> {{ recommendation.time_reason }}</p>
+            <p><strong>Method Reasoning:</strong> {{ recommendation.method_reason }}</p>
+            {% if recommendation.crop_sensitive_stage %}
+            <p><strong>Crop Sensitive Stage:</strong> {{ recommendation.crop_sensitive_stage|title }}</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if recommendation.recommendations %}
+    <h5 class="mt-4">Additional Recommendations:</h5>
+    <ul>
+        {% for rec in recommendation.recommendations %}
+        <li>{{ rec }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

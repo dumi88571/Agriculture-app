@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Farm</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="farmer_id" class="form-label">Farmer</label>
+        <select class="form-select" id="farmer_id" name="farmer_id" required>
+            <option value="">Select a farmer</option>
+            {% for farmer in farmers %}
+            <option value="{{ farmer[0] }}">{{ farmer[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Farm Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="size" class="form-label">Size (acres)</label>
+        <input type="number" class="form-control" id="size" name="size" step="0.01" required>
+    </div>
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="location">
+    </div>
+    <button type="submit" class="btn btn-success">Add Farm</button>
+    <a href="{{ url_for('farms') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

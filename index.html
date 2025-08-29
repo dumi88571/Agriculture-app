@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron bg-success text-white p-5 rounded">
+    <h1 class="display-4">AI Agriculture Application</h1>
+    <p class="lead">Leveraging data science and machine learning to help farmers increase productivity while preserving the environment.</p>
+    <hr class="my-4">
+    <p>Our intelligent farming solution provides insights and recommendations for crop yield prediction, pest detection, irrigation optimization, and more.</p>
+    <a class="btn btn-light btn-lg" href="{{ url_for('dashboard') }}" role="button">Get Started</a>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-seedling text-success"></i> Crop Yield Prediction</h5>
+                <p class="card-text">Predict expected yield based on historical data, weather patterns, soil conditions, and farming practices.</p>
+                <a href="{{ url_for('predict_yield') }}" class="btn btn-success">Try Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-bug text-success"></i> Pest Detection</h5>
+                <p class="card-text">Early identification of crop pests and diseases using environmental data analysis.</p>
+                <a href="{{ url_for('detect_pests') }}" class="btn btn-success">Try Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-tint text-success"></i> Irrigation Optimization</h5>
+                <p class="card-text">Smart water usage recommendations to conserve water while maximizing crop health.</p>
+                <a href="{{ url_for('optimize_irrigation') }}" class="btn btn-success">Try Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-mountain text-success"></i> Soil Health Analysis</h5>
+                <p class="card-text">Analysis of soil composition and nutrient levels with improvement recommendations.</p>
+                <a href="{{ url_for('analyze_soil') }}" class="btn btn-success">Try Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-chart-line text-success"></i> Market Price Prediction</h5>
+                <p class="card-text">Predictive analytics for crop market prices to optimize selling times.</p>
+                <a href="{{ url_for('market_data') }}" class="btn btn-success">View Data</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-leaf text-success"></i> Sustainability Tracking</h5>
+                <p class="card-text">Carbon footprint monitoring and environmental impact assessment.</p>
+                <a href="{{ url_for('sustainability') }}" class="btn btn-success">View Data</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

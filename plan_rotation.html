@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Crop Rotation Planner</h2>
+
+<p>Enter information about your last crop and soil conditions to get crop rotation recommendations:</p>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="last_crop" class="form-label">Last Crop Grown</label>
+        <select class="form-select" id="last_crop" name="last_crop" required>
+            <option value="">Select a crop</option>
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="corn">Corn</option>
+            <option value="soybean">Soybean</option>
+            <option value="cotton">Cotton</option>
+            <option value="potato">Potato</option>
+            <option value="tomato">Tomato</option>
+            <option value="beans">Beans</option>
+            <option value="peas">Peas</option>
+            <option value="cabbage">Cabbage</option>
+            <option value="broccoli">Broccoli</option>
+            <option value="cucumber">Cucumber</option>
+            <option value="squash">Squash</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="soil_nitrogen" class="form-label">Soil Nitrogen (ppm)</label>
+        <input type="number" class="form-control" id="soil_nitrogen" name="soil_nitrogen" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="soil_phosphorus" class="form-label">Soil Phosphorus (ppm)</label>
+        <input type="number" class="form-control" id="soil_phosphorus" name="soil_phosphorus" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="soil_potassium" class="form-label">Soil Potassium (ppm)</label>
+        <input type="number" class="form-control" id="soil_potassium" name="soil_potassium" step="0.1" required>
+    </div>
+    <button type="submit" class="btn btn-success">Get Recommendations</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% if recommendations %}
+<div class="alert alert-info mt-4">
+    <h4>Crop Rotation Recommendations</h4>
+    <p>Based on your last crop and soil conditions, here are the recommended crops for rotation:</p>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Recommended Crop</th>
+                    <th>Plant Family</th>
+                    <th>Benefit Score</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rec in recommendations %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ rec.crop }}</td>
+                    <td>{{ rec.family }}</td>
+                    <td>{{ rec.benefit_score }}</td>
+                    <td>{{ rec.reason }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

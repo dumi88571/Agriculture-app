@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Farms</h2>
+    <a href="{{ url_for('add_farm') }}" class="btn btn-success">Add Farm</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Farmer</th>
+            <th>Name</th>
+            <th>Size (acres)</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for farm in farms %}
+        <tr>
+            <td>{{ farm[0] }}</td>
+            <td>{{ farm[5] }}</td>
+            <td>{{ farm[2] }}</td>
+            <td>{{ farm[3] }}</td>
+            <td>{{ farm[4] }}</td>
+            <td>
+                <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

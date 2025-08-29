@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Soil Health Analysis</h2>
+
+<p>Enter soil test results to analyze soil health and get detailed recommendations:</p>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="pH" class="form-label">pH Level</label>
+        <input type="number" class="form-control" id="pH" name="pH" min="0" max="14" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="nitrogen" class="form-label">Nitrogen (ppm)</label>
+        <input type="number" class="form-control" id="nitrogen" name="nitrogen" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="phosphorus" class="form-label">Phosphorus (ppm)</label>
+        <input type="number" class="form-control" id="phosphorus" name="phosphorus" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="potassium" class="form-label">Potassium (ppm)</label>
+        <input type="number" class="form-control" id="potassium" name="potassium" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="organic_matter" class="form-label">Organic Matter (%)</label>
+        <input type="number" class="form-control" id="organic_matter" name="organic_matter" step="0.1" required>
+    </div>
+    <button type="submit" class="btn btn-success">Analyze Soil</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% if analysis %}
+<div class="alert alert-info mt-4">
+    <h4>Soil Health Analysis Results</h4>
+    <p>Overall Soil Health Score: <strong>{{ analysis.overall_score }}/100</strong></p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Nutrient Scores:</h5>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    pH
+                    <span class="badge bg-primary rounded-pill">{{ analysis.scores.pH }}/100</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Nitrogen
+                    <span class="badge bg-primary rounded-pill">{{ analysis.scores.nitrogen }}/100</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Phosphorus
+                    <span class="badge bg-primary rounded-pill">{{ analysis.scores.phosphorus }}/100</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Potassium
+                    <span class="badge bg-primary rounded-pill">{{ analysis.scores.potassium }}/100</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Organic Matter
+                    <span class="badge bg-primary rounded-pill">{{ analysis.scores.organic_matter }}/100</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h5>Health Indicators:</h5>
+            <div class="progress mb-2">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ analysis.overall_score }}%" aria-valuenow="{{ analysis.overall_score }}" aria-valuemin="0" aria-valuemax="100">{{ analysis.overall_score }}%</div>
+            </div>
+            <p class="mt-3">
+                {% if analysis.overall_score >= 85 %}
+                    <span class="badge bg-success">Excellent Soil Health</span>
+                {% elif analysis.overall_score >= 70 %}
+                    <span class="badge bg-info">Good Soil Health</span>
+                {% elif analysis.overall_score >= 50 %}
+                    <span class="badge bg-warning">Fair Soil Health</span>
+                {% else %}
+                    <span class="badge bg-danger">Poor Soil Health</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    
+    {% if analysis.recommendations %}
+    <h5 class="mt-4">Quick Recommendations:</h5>
+    <ul>
+        {% for recommendation in analysis.recommendations %}
+        <li>{{ recommendation }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if analysis.detailed_recommendations %}
+    <h5 class="mt-4">Detailed Recommendations:</h5>
+    <div class="accordion" id="recommendationsAccordion">
+        {% for rec in analysis.detailed_recommendations %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ loop.index }}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                    <span class="badge bg-{% if rec.severity == 'High' %}danger{% elif rec.severity == 'Medium' %}warning{% else %}secondary{% endif %} me-2">{{ rec.severity }}</span>
+                    {{ rec.issue }}
+                </button>
+            </h2>
+            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#recommendationsAccordion">
+                <div class="accordion-body">
+                    <p><strong>Solution:</strong> {{ rec.solution }}</p>
+                    <p><strong>Application:</strong> {{ rec.application }}</p>
+                    <p><strong>Benefits:</strong> {{ rec.benefits }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

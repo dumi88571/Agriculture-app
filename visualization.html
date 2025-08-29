@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Data Visualization</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Soil pH Levels Over Time
+            </div>
+            <div class="card-body">
+                <canvas id="phChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Crop Yield Comparison
+            </div>
+            <div class="card-body">
+                <canvas id="yieldChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Weather Patterns
+            </div>
+            <div class="card-body">
+                <canvas id="weatherChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Market Price Trends
+            </div>
+            <div class="card-body">
+                <canvas id="priceChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Sample data for charts (in a real application, this would come from the database)
+    const phData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Soil pH',
+            data: [6.5, 6.7, 6.8, 6.6, 6.4, 6.5],
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+
+    const yieldData = {
+        labels: ['Wheat', 'Rice', 'Corn', 'Soybean'],
+        datasets: [{
+            label: 'Yield (tons/hectare)',
+            data: [3.2, 4.1, 4.8, 2.9],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const weatherData = {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [
+            {
+                label: 'Temperature (°C)',
+                data: [22, 24, 23, 25, 26, 24, 23],
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            },
+            {
+                label: 'Rainfall (mm)',
+                data: [5, 10, 0, 15, 20, 8, 3],
+                borderColor: 'rgb(54, 162, 235)',
+                tension: 0.1
+            }
+        ]
+    };
+
+    const priceData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Wheat Price ($/ton)',
+            data: [200, 210, 205, 220, 230, 225],
+            borderColor: 'rgb(153, 102, 255)',
+            tension: 0.1
+        }]
+    };
+
+    // Render charts
+    window.onload = function() {
+        const phCtx = document.getElementById('phChart').getContext('2d');
+        const phChart = new Chart(phCtx, {
+            type: 'line',
+            data: phData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+
+        const yieldCtx = document.getElementById('yieldChart').getContext('2d');
+        const yieldChart = new Chart(yieldCtx, {
+            type: 'bar',
+            data: yieldData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const weatherCtx = document.getElementById('weatherChart').getContext('2d');
+        const weatherChart = new Chart(weatherCtx, {
+            type: 'line',
+            data: weatherData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(priceCtx, {
+            type: 'line',
+            data: priceData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    };
+</script>
+{% endblock %}

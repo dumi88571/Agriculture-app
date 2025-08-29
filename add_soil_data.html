@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Soil Data</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="farm_id" class="form-label">Farm</label>
+        <select class="form-select" id="farm_id" name="farm_id" required>
+            <option value="">Select a farm</option>
+            {% for farm in farms %}
+            <option value="{{ farm[0] }}">{{ farm[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+    </div>
+    <div class="mb-3">
+        <label for="pH" class="form-label">pH Level</label>
+        <input type="number" class="form-control" id="pH" name="pH" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="nitrogen" class="form-label">Nitrogen (ppm)</label>
+        <input type="number" class="form-control" id="nitrogen" name="nitrogen" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="phosphorus" class="form-label">Phosphorus (ppm)</label>
+        <input type="number" class="form-control" id="phosphorus" name="phosphorus" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="potassium" class="form-label">Potassium (ppm)</label>
+        <input type="number" class="form-control" id="potassium" name="potassium" step="0.1" required>
+    </div>
+    <div class="mb-3">
+        <label for="organic_matter" class="form-label">Organic Matter (%)</label>
+        <input type="number" class="form-control" id="organic_matter" name="organic_matter" step="0.1" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Soil Data</button>
+    <a href="{{ url_for('soil_data') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

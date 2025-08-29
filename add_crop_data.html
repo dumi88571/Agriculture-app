@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Crop Data</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="farm_id" class="form-label">Farm</label>
+        <select class="form-select" id="farm_id" name="farm_id" required>
+            <option value="">Select a farm</option>
+            {% for farm in farms %}
+            <option value="{{ farm[0] }}">{{ farm[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="crop_type" class="form-label">Crop Type</label>
+        <select class="form-select" id="crop_type" name="crop_type" required>
+            <option value="">Select a crop type</option>
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="corn">Corn</option>
+            <option value="soybean">Soybean</option>
+            <option value="cotton">Cotton</option>
+            <option value="potato">Potato</option>
+            <option value="tomato">Tomato</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="planting_date" class="form-label">Planting Date</label>
+        <input type="date" class="form-control" id="planting_date" name="planting_date" required>
+    </div>
+    <div class="mb-3">
+        <label for="expected_harvest_date" class="form-label">Expected Harvest Date</label>
+        <input type="date" class="form-control" id="expected_harvest_date" name="expected_harvest_date" required>
+    </div>
+    <div class="mb-3">
+        <label for="expected_yield" class="form-label">Expected Yield (tons/hectare)</label>
+        <input type="number" class="form-control" id="expected_yield" name="expected_yield" step="0.01" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Crop Data</button>
+    <a href="{{ url_for('crop_data') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
