@@ -177,7 +177,7 @@ python app.py
 
 ## 👨‍💻 Author
 
-### Matthew Mtisi
+### Dumisani Mabhugu
 
 Data Science Student | Machine Learning Enthusiast | AI Developer
 
